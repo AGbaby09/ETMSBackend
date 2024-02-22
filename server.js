@@ -2,8 +2,12 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import dbConnect from "./config/dbConnect.js";
-// import UserRoutes from "./routes/UserRoutes.js";
-// import TicketRoutes from "./routes/TicketRoutes.js";
+import Employee from "./routes/Employee.js";
+import Admin from "./routes/Admin.js";
+// import Driver from "./routes/Driver.js";
+// import Vehicle from "./routes/Vehicle.js";rs
+
+// import Driver from "./routes/Driver.js";
 
 
 // configuring dotenv
@@ -30,8 +34,8 @@ app.options("*", cors(corsOptions));
 
 
 // routes
-// app.use("/api/v1/user", UserRoutes)
-// app.use("/api/v1/ticket", TicketRoutes)
+app.use("/api/v1/employee", Employee)
+app.use("/api/v1/admin", Admin)
 
 
 
