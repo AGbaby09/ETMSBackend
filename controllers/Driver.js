@@ -74,3 +74,36 @@ export const loginDriver = async (req, res) => {
         res.status(400).json("All fields must be filled");
     }
 };
+
+export const createDriver = async (req, res)=>{
+    const { fullname, branch, email, password, role, contact } = req.body;
+
+    try {
+        if (!validator.isEmail(email)) {
+            return res.status(400).json("Email is invalid");
+        }
+
+        const emailInUse = await Driver.exists({ email });
+        if (emailInUse) {
+            return res.status(400).json("Email already in use");
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newUser = await Employee.create({ fullname, email, password: hashedPassword, branch, role, contact });
+        res.status(201).json(newUser);
+    } catch (error) {
+        console.error("Error during registration:", error);
+        res.status(500).json("Internal Server Error");
+    }
+}
+
+
+export const fetchDrivers = async (req, res) => {
+    try {
+        const employees = await Driver.find().sort({ createdAt: -1 });
+        res.status(200).json(employees);
+    } catch (error) {
+        console.error("Error fetching drivers:", error);
+        res.status(500).json("Internal Server Error");
+    }
+};

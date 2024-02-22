@@ -1,91 +1,90 @@
-import Employee from "../models/Employee.js"
+import Employee from "../models/Employee.js";
 import validator from "validator";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
-
 const createToken = (_id) => {
-    return (jwt.sign({_id}, process.env.SECRET, {expiresIn: '1d'}))
+    return jwt.sign({ _id }, process.env.SECRET, { expiresIn: '1d' });
 }
 
-// register employee
 export const registerEmployee = async (req, res) => {
-    const { fullname, branch, email, password, role } = req.body;
+    const { fullname, branch, email, password, role, contact } = req.body;
 
     try {
-        // Check if email is valid
         if (!validator.isEmail(email)) {
             return res.status(400).json("Email is invalid");
         }
 
-        // Check if the email is already in use
-        const emailInUse = await Employee.findOne({ email: email });
+        const emailInUse = await Employee.exists({ email });
         if (emailInUse) {
             return res.status(400).json("Email already in use");
         }
 
-        // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
-
-        // Create a new user
-        const newUser = await Employee.create({
-            fullname: fullname,
-            email: email,
-            password: hashedPassword,
-            branch: branch,
-            role: role,
-        });
-
+        const newUser = await Employee.create({ fullname, email, password: hashedPassword, branch, role, contact });
         res.status(201).json(newUser);
     } catch (error) {
-        console.error(error);
+        console.error("Error during registration:", error);
         res.status(500).json("Internal Server Error");
     }
 };
 
-// login employee
 export const loginEmployee = async (req, res) => {
     const { email, password } = req.body;
 
-    if (email && password) {
-        try {
-            const user = await Employee.findOne({ email: email });
-            const role = user.role;
-            const id = user._id;
-    
-            if (user) {
-                // Compare the hashed password with the provided password
-                const passwordMatch = await bcrypt.compare(password, user.password);
-    
-                if (passwordMatch) {
-                    const token = createToken(user._id)
-                    res.status(200).json({email, token, role, id});
-                } else {
-                    res.status(400).json("incorrect password");
-                }
-            } else {
-                res.status(400).json("User doesn't exists");
-            }
-        } catch (error) {
-            console.error("Error during login:", error.message);
-            res.status(500).json("Internal Server Error");
+    if (!email || !password) {
+        return res.status(400).json("All fields must be filled");
+    }
+
+    try {
+        const user = await Employee.findOne({ email });
+        if (!user) {
+            return res.status(400).json("User doesn't exist");
         }
-    } else {
-        res.status(400).json("All fields must be filled");
+
+        const passwordMatch = await bcrypt.compare(password, user.password);
+        if (passwordMatch) {
+            const token = createToken(user._id);
+            const { _id, role } = user;
+            res.status(200).json({ email, token, role, id: _id });
+        } else {
+            res.status(400).json("Incorrect password");
+        }
+    } catch (error) {
+        console.error("Error during login:", error.message);
+        res.status(500).json("Internal Server Error");
     }
 };
 
-// fetching all users
 export const fetchEmployees = async (req, res) => {
-    console.log('fetch')
+    try {
+        const employees = await Employee.find().sort({ createdAt: -1 });
+        res.status(200).json(employees);
+    } catch (error) {
+        console.error("Error fetching employees:", error);
+        res.status(500).json("Internal Server Error");
+    }
+};
+
+
+export const createEmployee = async (req, res)=>{
+    const { fullname, branch, email, password, role, contact } = req.body;
 
     try {
-      await Employee.find().sort({ createdAt: -1 })
-      .then(result => {res.status(200).json(result);console.log(result)})
-      .catch(error => {res.status(400).json(error);console.log(error)})
+        if (!validator.isEmail(email)) {
+            return res.status(400).json("Email is invalid");
+        }
+
+        const emailInUse = await Employee.exists({ email });
+        if (emailInUse) {
+            return res.status(400).json("Email already in use");
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newUser = await Employee.create({ fullname, email, password: hashedPassword, branch, role, contact });
+        res.status(201).json(newUser);
     } catch (error) {
-         res.status(400).json(error)
-         console.log(error)
+        console.error("Error during registration:", error);
+        res.status(500).json("Internal Server Error");
     }
- 
- };
+}

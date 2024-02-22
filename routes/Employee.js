@@ -1,5 +1,5 @@
 import express from "express";
-import { fetchEmployees, loginEmployee, registerEmployee } from "../controllers/Employee.js";
+import { createEmployee, fetchEmployees, loginEmployee, registerEmployee } from "../controllers/Employee.js";
 
 
 const EmployeeRoutes = express.Router();
@@ -10,7 +10,7 @@ EmployeeRoutes.post("/login", loginEmployee)
 
 EmployeeRoutes.get("/fetchAll", fetchEmployees)
 
-// EmployeeRoutes.get("/fetchOne/:_id", )
+EmployeeRoutes.post("/create", createEmployee)
 
 // EmployeeRoutes.get("/fetchTickets/:email", )
 

@@ -2,8 +2,9 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import dbConnect from "./config/dbConnect.js";
-import Employee from "./routes/Employee.js";
+import EmployeeRoutes from "./routes/Employee.js";
 import Admin from "./routes/Admin.js";
+import DriverRoutes from "./routes/Driver.js";
 // import Driver from "./routes/Driver.js";
 // import Vehicle from "./routes/Vehicle.js";rs
 
@@ -34,8 +35,9 @@ app.options("*", cors(corsOptions));
 
 
 // routes
-app.use("/api/v1/employee", Employee)
+app.use("/api/v1/employee", EmployeeRoutes)
 app.use("/api/v1/admin", Admin)
+app.use("/api/v1/driver", DriverRoutes)
 
 
 

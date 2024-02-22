@@ -1,16 +1,16 @@
 import express from "express";
-import { loginDriver, registerDriver } from "../controllers/Driver.js";
+import { createDriver, fetchDrivers, loginDriver, registerDriver } from "../controllers/Driver.js";
 
 
 const DriverRoutes = express.Router();
 
-DriverRoutes.post("/register", registerEmployee)
+DriverRoutes.post("/register", registerDriver)
 
-DriverRoutes.post("/login", loginEmployee)
+DriverRoutes.post("/login", loginDriver)
 
-DriverRoutes.get("/fetchAll", )
+DriverRoutes.get("/fetchAll", fetchDrivers)
 
-DriverRoutes.get("/fetchOne/:_id", )
+DriverRoutes.post("/create", createDriver)
 
 DriverRoutes.get("/fetchTickets/:email", )
 
