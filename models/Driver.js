@@ -20,9 +20,6 @@ const DriverSchema = new Schema({
         type: String,
         required: true,
     },
-    destination:{
-        type: String,
-    },
     branch:{
         type: String,
         required: true,

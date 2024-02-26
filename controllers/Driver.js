@@ -89,7 +89,7 @@ export const createDriver = async (req, res)=>{
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = await Employee.create({ fullname, email, password: hashedPassword, branch, role, contact });
+        const newUser = await Driver.create({ fullname, email, password: hashedPassword, branch, role, contact });
         res.status(201).json(newUser);
     } catch (error) {
         console.error("Error during registration:", error);

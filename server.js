@@ -5,6 +5,7 @@ import dbConnect from "./config/dbConnect.js";
 import EmployeeRoutes from "./routes/Employee.js";
 import Admin from "./routes/Admin.js";
 import DriverRoutes from "./routes/Driver.js";
+import VehicleRoutes from "./routes/Vehicle.js";
 // import Driver from "./routes/Driver.js";
 // import Vehicle from "./routes/Vehicle.js";rs
 
@@ -38,6 +39,7 @@ app.options("*", cors(corsOptions));
 app.use("/api/v1/employee", EmployeeRoutes)
 app.use("/api/v1/admin", Admin)
 app.use("/api/v1/driver", DriverRoutes)
+app.use("/api/v1/vehicle", VehicleRoutes)
 
 
 
