@@ -62,11 +62,12 @@ export const updateVehicle = async (req, res) => {
 
 export const closeVehicle = async (req, res) => {
     try {
-        const { time, id } = req.body;
+        const { id } = req.body;
 
         const updatedVehicle = await Vehicle.findByIdAndUpdate(
             id,
-            { driver: null, destination: '', time, status: 'closed' },
+            // note to change time to null !INCOMPLETE
+            { driver: '', destination: '', time: null, status: 'closed' },
             { new: true }
         );
 

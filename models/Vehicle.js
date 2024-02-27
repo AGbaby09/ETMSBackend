@@ -3,20 +3,20 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const VehicleSchema = new Schema({
-    brand:{
+    brand: {
         type: String,
         required: true
     },
-    plate:{
+    plate: {
         type: String,
         required: true,
         unique: true,
     },
-    seats:{
+    seats: {
         type: Number,
         required: true,
     },
-    status:{
+    status: {
         type: String,
         required: true,
     },
@@ -27,13 +27,13 @@ const VehicleSchema = new Schema({
     //     type: Schema.Types.ObjectId,
     //     ref: 'drivers',
     // },
-    destination:{
+    destination: {
         type: String,
     },
     time: {
         type: Date,
     },
-    passengers:[
+    passengers: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "employees",

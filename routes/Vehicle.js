@@ -6,7 +6,7 @@ const VehicleRoutes = express.Router();
 VehicleRoutes.post('/create', createVehicle);
 VehicleRoutes.post('/board', boardVehicle);
 VehicleRoutes.put('/open', updateVehicle);
-VehicleRoutes.post('/close', closeVehicle);
+VehicleRoutes.put('/close', closeVehicle);
 VehicleRoutes.get('/fetchAll', fetchVehicles);
 VehicleRoutes.get('/fetchOpen', fetchOpenVehicles);
 
