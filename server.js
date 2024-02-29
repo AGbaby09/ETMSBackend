@@ -7,6 +7,7 @@ import Admin from "./routes/Admin.js";
 import DriverRoutes from "./routes/Driver.js";
 import VehicleRoutes from "./routes/Vehicle.js";
 import CountRoutes from "./routes/Count.js";
+import EditRoutes from "./routes/Edit.js";
 // import Driver from "./routes/Driver.js";
 // import Vehicle from "./routes/Vehicle.js";rs
 
@@ -42,6 +43,7 @@ app.use("/api/v1/admin", Admin)
 app.use("/api/v1/driver", DriverRoutes)
 app.use("/api/v1/vehicle", VehicleRoutes)
 app.use("/api/v1/dashboard", CountRoutes)
+app.use("/api/v1/edit", EditRoutes)
 
 
 
