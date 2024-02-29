@@ -3,6 +3,23 @@ import Admin from "../models/Admin.js";
 import bcrypt from "bcrypt";
 import validator from "validator";
 
+export const getInfo = async (req, res) => {
+    try {
+        const {id} = req.body;
+        const employeeInfo = await Employee.findById(id)
+        const adminInfo = await Admin.findById(id)
+
+        if(employeeInfo){
+            res.status(200).json(employeeInfo)
+        }
+        if(adminInfo){
+            res.status(200).json(adminInfo)
+        }
+    } catch (error) {
+        res.status(500).json(error)
+    }
+}
+
 export const editFullname = async (req, res) => {
     try {
         
